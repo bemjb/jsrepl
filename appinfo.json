@@ -1,0 +1,9 @@
+{
+	"id": "com.pyen.jsrepl",
+	"version": "1.0.0",
+	"vendor": "Pyen",
+	"type": "web",
+	"main": "index.html",
+	"title": "jsrepl",
+	"icon": "icon.png"
+}

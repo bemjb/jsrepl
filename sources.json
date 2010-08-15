@@ -1,0 +1,7 @@
+[
+    {"source": "app/assistants/stage-assistant.js"},
+    {
+        "scenes": "repl",
+        "source": "app/assistants/repl-assistant.js"
+    }
+]
