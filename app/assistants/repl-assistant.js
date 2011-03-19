@@ -8,9 +8,12 @@ function ReplAssistant() {
 ReplAssistant.prototype.setup = function() {
     /* this function is for setup tasks that have to happen when the scene is first created */
             
+    this.environment = {};
     this.outputData = [];
     
     /* setup widgets here */
+    this.controller.setupWidget("outputScroller", { mode: 'vertical' }, {});
+
     this.outputAttrs = {
         itemTemplate: "repl/repl-itemTemplate",
         listTemplate: "repl/repl-listTemplate",
@@ -18,7 +21,7 @@ ReplAssistant.prototype.setup = function() {
     };
     this.outputModel = { };
     this.controller.setupWidget(
-        "output", this.outputAttrs, this.outputModel
+        "outputList", this.outputAttrs, this.outputModel
     ); 
 
     this.inputAttrs = {
@@ -42,7 +45,7 @@ ReplAssistant.prototype.setup = function() {
 ReplAssistant.prototype.activate = function(event) {
     /* put in event handlers here that should only be in effect when this scene is active. For
        example, key handlers that are observing the document */
-    this.outputWidget = this.controller.get('output');
+    this.outputWidget = this.controller.get('outputList');
     this.inputWidget = this.controller.get('inputWidget');
     this.inputWidget.observe('keyup', this.handleInputKeyEvent.bind(this));
 };
@@ -64,17 +67,29 @@ ReplAssistant.prototype.handleInputKeyEvent = function(event) {
 ReplAssistant.prototype.evalInput = function(input) {
     var output;
     try {
-        output = eval(input);
+        output = eval.call(null, input);
     }
     catch (err) {
         output = err;
     }
+
+    if (output === undefined) {
+        output = "undefined";
+    }
+    else if (typeof(output) == 'boolean') {
+        output = (output ? 'true' : 'false');
+    }
+    else if (typeof(output) == 'string') {
+        output = "'" + output + "'";
+    }
+
     Mojo.Log.info("Evaluated value: " + output);
-    return { data: output };
+    return { command: input, returnValue: output };
 };
 
 ReplAssistant.prototype.outputItemsCallback = function(listWidget, offset, limit) {
     listWidget.mojo.noticeUpdatedItems(offset, this.outputData);
+    listWidget.mojo.revealItem(this.outputData.length-1, true);
 };
 
 ReplAssistant.prototype.deactivate = function(event) {

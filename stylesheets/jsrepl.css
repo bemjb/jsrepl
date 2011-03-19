@@ -1,1 +1,24 @@
 /* TODO: put your application-specific CSS here */
+#input {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+.output {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+@media (device-height: 480px) {
+    .output {
+        height: 370px;
+    }
+}
+
+@media (device-height: 400px) {
+    .output {
+        height: 290px;
+    }
+}
