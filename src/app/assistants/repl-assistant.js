@@ -67,20 +67,10 @@ ReplAssistant.prototype.handleInputKeyEvent = function(event) {
 ReplAssistant.prototype.evalInput = function(input) {
     var output;
     try {
-        output = eval.call(null, input);
+        output = Object.inspect(eval.call(null, input));
     }
     catch (err) {
         output = err;
-    }
-
-    if (output === undefined) {
-        output = "undefined";
-    }
-    else if (typeof(output) == 'boolean') {
-        output = (output ? 'true' : 'false');
-    }
-    else if (typeof(output) == 'string') {
-        output = "'" + output + "'";
     }
 
     Mojo.Log.info("Evaluated value: " + output);
