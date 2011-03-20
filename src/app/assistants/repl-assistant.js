@@ -8,7 +8,6 @@ function ReplAssistant() {
 ReplAssistant.prototype.setup = function() {
     /* this function is for setup tasks that have to happen when the scene is first created */
             
-    this.environment = {};
     this.outputData = [];
     
     /* setup widgets here */
@@ -17,7 +16,8 @@ ReplAssistant.prototype.setup = function() {
     this.outputAttrs = {
         itemTemplate: "repl/repl-itemTemplate",
         listTemplate: "repl/repl-listTemplate",
-        itemsCallback: this.outputItemsCallback.bind(this)
+        itemsCallback: this.outputItemsCallback.bind(this),
+        fixedHeightItems: false
     };
     this.outputModel = { };
     this.controller.setupWidget(

@@ -13,12 +13,18 @@
 
 @media (device-height: 480px) {
     .output {
-        height: 370px;
+        max-height: 370px;
     }
 }
 
 @media (device-height: 400px) {
     .output {
-        height: 290px;
+        max-height: 290px;
+    }
+}
+
+@media (device-height: 800px) {
+    .output {
+        max-height: 690px;
     }
 }
